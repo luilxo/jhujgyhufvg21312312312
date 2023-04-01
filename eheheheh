@@ -1,0 +1,41 @@
+local positions = {
+    Vector3.new(-1364.2171630859375, 4.1133904457092285, -3207.972412109375),
+    Vector3.new(-1626.658447265625, 4.11338996887207, -3207.690185546875),
+    Vector3.new(-1669.0943603515625, 4.213390350341797, -3179.284912109375),
+    Vector3.new(-1688.307861328125, 4.1133904457092285, -3123.486083984375),
+    Vector3.new(-1670.181396484375, 4.1133904457092285, -3071.964111328125),
+    Vector3.new(-1623.929931640625, 4.193390369415283, -3043.837646484375),
+    Vector3.new(-1432.03466796875, 4.153390407562256, -3043.5380859375),
+    Vector3.new(-1388.4736328125, 4.213390350341797, -3067.984619140625),
+    Vector3.new(-1368.1561279296875, 4.193390369415283, -3126.217041015625),
+    Vector3.new(-1384.9947509765625, 4.1133904457092285, -3179.09912109375),
+    Vector3.new(-1423.6170654296875, 4.193390369415283, -3206.933837890625),
+}
+
+local isScriptEnabled = false
+
+local toggleButton = script.Parent.ToggleButton -- Replace "ToggleButton" with the actual name of your toggle button
+
+-- Function to toggle the script on and off
+local function toggleScript()
+    isScriptEnabled = not isScriptEnabled -- Toggle the Boolean value
+    
+    if isScriptEnabled then
+        toggleButton.Text = "Script is ON" -- Update the toggle button label
+        -- Loop through each position in the table and teleport the player to it
+        for _, position in ipairs(positions) do
+            if isScriptEnabled then -- Check if the script is still enabled before teleporting
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(position)
+                wait(1) -- Wait for 1 second before teleporting to the next position
+            else
+                break -- Exit the loop if the script is disabled
+            end
+        end
+        toggleButton.Text = "Script is OFF" -- Update the toggle button label
+    else
+        toggleButton.Text = "Script is OFF" -- Update the toggle button label
+    end
+end
+
+-- Connect the toggleScript function to the toggle button's "Activated" event
+toggleButton.Activated:Connect(toggleScript)
